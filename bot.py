@@ -31,6 +31,10 @@ async def join(ctx):
 @bot.command()
 async def play(ctx, *, query: str):
     """Reproduce un audio (URL o búsqueda)."""
+    if not ctx.author.voice:
+        await ctx.reply("🚫 Debes estar en un canal de voz.")
+        return
+
     vc = ctx.voice_client or await ctx.author.voice.channel.connect()
 
     data = ytdl.extract_info(query, download=False)
